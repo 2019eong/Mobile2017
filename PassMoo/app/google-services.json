@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "118757490600",
+    "firebase_url": "https://passmoo-96481.firebaseio.com",
+    "project_id": "passmoo-96481",
+    "storage_bucket": "passmoo-96481.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118757490600:android:0c009c4438301c60",
+        "android_client_info": {
+          "package_name": "edu.fcps.httpstjhsst.passmoo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118757490600-lg2hcs7hjk1am78aflu6d3fs8vgk0i7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.fcps.httpstjhsst.passmoo",
+            "certificate_hash": "a0b9aa1f6fa92132f042ce3291efab50ff48e30e"
+          }
+        },
+        {
+          "client_id": "118757490600-gnsl8n1pfm3jk7b9gri2nkjaca9k7ov8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClxj2waDDEzKtvKRI-tyUlsMdNhld55t4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118757490600-gnsl8n1pfm3jk7b9gri2nkjaca9k7ov8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
