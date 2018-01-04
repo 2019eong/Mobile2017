@@ -18,15 +18,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText mUsername; // username typed in on login screen
-    private EditText mPassword; // password typed in on login screen
-    private Button mLogin;  // login button on login screen
-    private TextView mAttempt;  // TxtView of remaining attempts
-    private int counter = 5;    // Count of remaining attempts
+
+    private EditText mUsername, mPassword;  // username, password typed in on login screen
+    private Button mLogin;  // login button
+    private TextView mAttempt;  // remaining attempts txtview
+    private int counter = 5;    // remaining attempts counter
     private TextView mUserRegister; // Link to Register Screen (for new users)
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;  // shows progress during waiting for authentication
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +34,30 @@ public class LoginActivity extends AppCompatActivity {
 
         /**** INITIALIZE VARIABLES ****/
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
         progressDialog = new ProgressDialog(this);
+
+//        /**** Check if user has already logged in beforehand ****/
+//        FirebaseUser user = firebaseAuth.getCurrentUser();
+//        if(user != null){
+//            finish();
+//            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//        }
 
         mUsername = (EditText)findViewById(R.id.userUsernameET);
         mPassword = (EditText)findViewById(R.id.userPasswordET);
         mLogin = (Button)findViewById(R.id.userLoginBTN);
         mAttempt = (TextView)findViewById(R.id.userAttemptTV);
         mUserRegister = (TextView)findViewById(R.id.userRegisterTV);
-        /******/
-        mAttempt.setText("Remaining Attempts: " + String.valueOf(counter));
+
+        mAttempt.setText("Attempts Remaining: " + counter);
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userPseudoEmail = mUsername.getText().toString()+"@gmail.com";  // adds txt to make it a pseudo email address
-                validate(userPseudoEmail, mPassword.getText().toString());
+                String userPseudoEmail = mUsername.getText().toString();
+                String userPassword = mPassword.getText().toString();
+                if(!userPseudoEmail.isEmpty() && !userPassword.isEmpty()) {
+                    validate(userPseudoEmail+"@gmail.com", userPassword);   // adds txt to make it a pseudo email address
+                }
             }
         });
         mUserRegister.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void validate(String userPseudoEmail, String userPassword){   // checks if user can login
+    private void validate(String userPseudoEmail, String userPassword){ // checks if user can login
+//        //implement firebase authentification
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
@@ -71,14 +79,14 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     progressDialog.dismiss();
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class)); // switch from login screen to homescreen
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));  // switch from login screen to homescreen
                 }
-                else{
+                else {
                     Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                     counter--;
-                    mAttempt.setText("Attempts Remaining: " + counter);
                     progressDialog.dismiss();
-                    if(counter == 0){   // if no more login attempts available
+                    mAttempt.setText("Attempts Remaining: " + counter);
+                    if (counter == 0) {     // if no more login attempts available
                         mLogin.setEnabled(false);   // disable login button
                     }
                 }

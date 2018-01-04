@@ -35,22 +35,22 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterPassword = (EditText)findViewById(R.id.registerPasswordET);
         mRegister = (Button)findViewById(R.id.registerBTN);
         mRegisterLogin = (TextView)findViewById(R.id.registerLoginTV);
-        /****/
+
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(validate()){
                     // upload data to database
                     // database takes "pseudo"-email and password
-                    String newPseudoEmail = mRegisterUsername.getText().toString().trim()+"@gmail.com";
-                    String newPassword = mRegisterPassword.getText().toString().trim();
+                    String pseudoEmail = mRegisterUsername.getText().toString().trim()+"@gmail.com";
+                    String password = mRegisterPassword.getText().toString().trim();
 
-                    firebaseAuth.createUserWithEmailAndPassword(newPseudoEmail, newPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    firebaseAuth.createUserWithEmailAndPassword(pseudoEmail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));   // redirect back to login page
+                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));  // redirect back to login page
                             }
                             else{
                                 Toast.makeText(RegisterActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();

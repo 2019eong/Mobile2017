@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
+
+
         progressDialog = new ProgressDialog(this);
 
         mUsername = (EditText)findViewById(R.id.userUsernameET);
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userPseudoEmail = mUsername.getText().toString()+"@gmail.com";  // adds txt to make it a pseudo email address
+                String userPseudoEmail = mUsername.getText().toString();  // adds txt to make it a pseudo email address
                 validate(userPseudoEmail, mPassword.getText().toString());
             }
         });

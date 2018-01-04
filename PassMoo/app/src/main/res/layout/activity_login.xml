@@ -22,7 +22,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327" />
+        app:layout_constraintVertical_bias="0.287" />
 
     <EditText
         android:id="@+id/userPasswordET"
@@ -40,7 +40,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userUsernameET"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintVertical_bias="0.121" />
 
     <Button
         android:id="@+id/userLoginBTN"
@@ -55,22 +55,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPasswordET"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.181" />
 
     <TextView
         android:id="@+id/userAttemptTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="97dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="Remaining Attempts: "
+        android:text="Attempts Remaining: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userLoginBTN"
-        app:layout_constraintVertical_bias="0.256" />
+        app:layout_constraintTop_toBottomOf="@+id/registerBTN"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <TextView
         android:id="@+id/userRegisterTV"
@@ -85,5 +86,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userAttemptTV" />
-
 </android.support.constraint.ConstraintLayout>

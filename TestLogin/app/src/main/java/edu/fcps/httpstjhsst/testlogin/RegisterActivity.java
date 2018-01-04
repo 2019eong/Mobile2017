@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(validate()){
                     // upload data to database
                     // database takes "pseudo"-email and password
-                    String newPseudoEmail = mRegisterUsername.getText().toString().trim()+"@gmail.com";
+                    String newPseudoEmail = mRegisterUsername.getText().toString().trim();
                     String newPassword = mRegisterPassword.getText().toString().trim();
 
                     firebaseAuth.createUserWithEmailAndPassword(newPseudoEmail, newPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
