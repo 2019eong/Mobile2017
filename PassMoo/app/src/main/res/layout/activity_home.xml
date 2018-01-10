@@ -1,22 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="edu.fcps.httpstjhsst.passmoo.HomeActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ScrollView01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/homeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="HomeActivity Reached"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/editicon"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/addButton"/>
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/addbuttonimage"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+
+
+        <LinearLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

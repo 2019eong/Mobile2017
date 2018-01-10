@@ -78,4 +78,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return result;
     }
+
+    public static class EditActivity extends AppCompatActivity {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_edit);
+        }
+    }
 }

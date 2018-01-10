@@ -1,4 +1,4 @@
-package edu.tjhsst.testhome;
+package edu.fcps.httpstjhsst.passmoo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
