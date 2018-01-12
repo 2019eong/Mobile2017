@@ -14,6 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -21,6 +26,9 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mRegister;   // register button on Register screen
     private TextView mRegisterLogin;    // Link to Login Screen (for returning users)
     private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private Map<String, User> mUserMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +38,21 @@ public class RegisterActivity extends AppCompatActivity {
         /**** INITIALIZE VARIABLES ****/
         firebaseAuth = FirebaseAuth.getInstance();
 
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("message");
+        mUserMap = new HashMap<String, User>();
+
         mRegisterName = (EditText)findViewById(R.id.registerNameET);
         mRegisterUsername = (EditText)findViewById(R.id.registerUsernameET);
         mRegisterPassword = (EditText)findViewById(R.id.registerPasswordET);
         mRegister = (Button)findViewById(R.id.registerBTN);
         mRegisterLogin = (TextView)findViewById(R.id.registerLoginTV);
+
+        //Strings of edit text stuff
+        final String registername = mRegisterName.getText().toString();
+        final String registerusername = mRegisterUsername.getText().toString();
+        final String registerpassword = mRegisterPassword.getText().toString();
+
 
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +62,14 @@ public class RegisterActivity extends AppCompatActivity {
                     // database takes "pseudo"-email and password
                     String pseudoEmail = mRegisterUsername.getText().toString().trim()+"@gmail.com";
                     String password = mRegisterPassword.getText().toString().trim();
+
+                    //make User object
+                    User mUser = new User(registername, registerusername, registerpassword);
+                    //storing User to database hashmap (mUserMap)
+
+                    //FIX THIS DOESN'T WORK CRASHES STUPID FIREBASE
+//                    mUserMap.put(registerusername, mUser);
+//                    myRef.setValue(mUserMap);
 
                     firebaseAuth.createUserWithEmailAndPassword(pseudoEmail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override

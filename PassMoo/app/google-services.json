@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "118757490600-3bj27smiipf8c1cugutldn69r5svfsf0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.fcps.httpstjhsst.passmoo",
+            "certificate_hash": "5319b9eac6345fd9b0293436760141089c048cae"
+          }
+        },
+        {
           "client_id": "118757490600-lg2hcs7hjk1am78aflu6d3fs8vgk0i7a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
