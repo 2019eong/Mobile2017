@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;  // shows progress during waiting for authentication
 
+    private String currentUsername; // data will be sent to other activities (Add, Edit, Home)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +73,17 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     progressDialog.dismiss();
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));  // switch from login screen to homescreen
+
+                    Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+//                    Intent addIntent = new Intent(LoginActivity.this, AddActivity.class);
+//                    Intent editIntent = new Intent(LoginActivity.this, EditActivity.class);
+
+                    currentUsername = mUsername.getText().toString();
+//                    Toast.makeText(LoginActivity.this, currentUsername, Toast.LENGTH_SHORT).show();
+                    homeIntent.putExtra("homeExtra", currentUsername);
+//                    addIntent.putExtra("addExtra", currentUsername);
+//                    editIntent.putExtra("editExtra", currentUsername);
+                    startActivity(homeIntent);  // switch from login screen to homescreen
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();

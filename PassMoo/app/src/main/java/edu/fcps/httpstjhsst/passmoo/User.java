@@ -1,17 +1,13 @@
 package edu.fcps.httpstjhsst.passmoo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Elise on 1/10/2018.
  */
 
 public class User {
-    private String name;
-    private String username;
-    private String password;
+    private String name, username, password;
     private ArrayList<AccountInfo> userAccounts;
 
     public User(String n, String u, String p){
@@ -31,5 +27,11 @@ public class User {
     }
     public ArrayList<AccountInfo> getAccountInfo(){
         return userAccounts;
+    }
+    public void addAccount(AccountInfo account){
+        userAccounts.add(account);
+    }
+    public String toString(){
+        return name+" "+username+" "+password;
     }
 }
