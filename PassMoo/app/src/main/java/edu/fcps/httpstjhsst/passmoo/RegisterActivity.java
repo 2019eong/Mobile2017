@@ -144,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
         mUserMap.put(username, user);
         myRef.setValue(mUserMap);
     }
+
     public static class EditActivity extends AppCompatActivity {
 
         @Override
