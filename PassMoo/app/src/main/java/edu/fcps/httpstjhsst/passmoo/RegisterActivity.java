@@ -14,8 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private DatabaseReference usersRef;
     private Map<String, User> mUserMap;
+    private boolean childrenExist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +47,26 @@ public class RegisterActivity extends AppCompatActivity {
         myRef = database.getReference("Users");
       // usersRef = myRef.child("users");
 
-        mUserMap = new HashMap<String, User>();
+        childrenExist = false;
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    HashMap<String, User> blah = child.getValue(HashMap.class);
+                    mUserMap = child.getValue(HashMap.class);
+                    childrenExist = true;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        myRef.setValue(mUserMap);
-       //usersRef.setValue(mUserMap);
+            }
+        });
+        if(!childrenExist){
+            mUserMap = new HashMap<String, User>();
+            myRef.setValue(mUserMap);
+            //usersRef.setValue(mUserMap);
+        }
 
 
         mRegisterName = (EditText)findViewById(R.id.registerNameET);
