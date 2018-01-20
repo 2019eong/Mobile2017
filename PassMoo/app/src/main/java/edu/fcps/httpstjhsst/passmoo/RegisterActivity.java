@@ -1,5 +1,6 @@
 package edu.fcps.httpstjhsst.passmoo;
 
+import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -32,7 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private Map<String, User> mUserMap;
+//    private Map<String, AccountInfo> mUserMap;
+    private TextView mTestingTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,29 +48,26 @@ public class RegisterActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
 
-        /** THIS WORKS :) **/
-        mUserMap = new HashMap<String, User>();
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){  // if data has already been put in beforehand, retrieve it so it won't override w/ new registry
-                    mUserMap = (HashMap<String, User>)dataSnapshot.getValue();  // cast value to HashMap
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-        /** THIS DOESN'T WORK -- DON'T USE BC IT OVERRIDES PREV REGISTRATIONS **/
-//        mUserMap = new HashMap<String, User>();
-//        myRef.setValue(mUserMap);
-
         mRegisterName = (EditText)findViewById(R.id.registerNameET);
         mRegisterUsername = (EditText)findViewById(R.id.registerUsernameET);
         mRegisterPassword = (EditText)findViewById(R.id.registerPasswordET);
         mRegister = (Button)findViewById(R.id.registerBTN);
         mRegisterLogin = (TextView)findViewById(R.id.registerLoginTV);
+
+        /*** OLD STUFF WITH HASHMAPS -- don't use as of now ***/
+        /** THIS WORKS :) **/
+//        mUserMap = new HashMap<String, User>();
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){  // if data has already been put in beforehand, retrieve it so it won't override w/ new registry
+//                    mUserMap = (HashMap<String, User>)dataSnapshot.getValue();  // cast value to HashMap
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
 
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
                     // database takes "pseudo"-email and password
                     String pseudoEmail = mRegisterUsername.getText().toString().trim()+"@gmail.com";
                     String password = mRegisterPassword.getText().toString().trim();
-
                     firebaseAuth.createUserWithEmailAndPassword(pseudoEmail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -107,17 +107,16 @@ public class RegisterActivity extends AppCompatActivity {
         String password = mRegisterPassword.getText().toString();
         if(!name.isEmpty() && !username.isEmpty() && !password.isEmpty()){ // if all fields filled out
             result = true;
-            User u = new User(name, username, password);
-//            Toast.makeText(RegisterActivity.this, u.toString(), Toast.LENGTH_SHORT).show();
-            pushToDatabase(username, u);
+            pushToDatabase(username);
         }
         return result;
     }
-    public void pushToDatabase(String username, User user){
-        mUserMap.put(username, user);
-        myRef.setValue(mUserMap);
+    public void pushToDatabase(String username){
+        myRef.child(username).push().setValue("N/A");   // pushes dummy piece of data to username's children
+        /*** OLD STUFF WITH HASHMAPS -- don't use as of now ***/
+        //mUserMap.put(username, user);
+        //myRef.setValue(mUserMap);
     }
-
     public static class EditActivity extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {

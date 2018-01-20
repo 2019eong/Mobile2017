@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.fcps.httpstjhsst.passmoo.LoginActivity">
+    android:background="#FFFFFF"
+    tools:context="edu.fcps.httpstjhsst.passmoo.LoginActivity"
+    >
 
     <EditText
         android:id="@+id/userUsernameET"
@@ -40,7 +42,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userUsernameET"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <Button
         android:id="@+id/userLoginBTN"
@@ -61,7 +63,7 @@
         android:id="@+id/userAttemptTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="97dp"
+        android:layout_marginBottom="119dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -82,6 +84,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="Don't Have An Account? Register"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

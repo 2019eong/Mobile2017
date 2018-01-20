@@ -8,7 +8,12 @@ public class AccountInfo {
     String website;
     String username;
     String password;
-
+    public AccountInfo()
+    {
+        website="N/A";
+        username="N/A";
+        password="N/A";
+    }
     public AccountInfo(String w, String u, String p)
     {
         website=w;
@@ -38,5 +43,8 @@ public class AccountInfo {
     public void setPassword(String p)
     {
         password=p;
+    }
+    public String toString(){
+        return website+" "+username+" "+password;
     }
 }

@@ -1,8 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/ScrollView01"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp"
+    android:background="#FFFFFF"
+    >
     <RelativeLayout
         android:id="@+id/RelativeLayout01"
         android:layout_width="fill_parent"
@@ -10,18 +12,20 @@
 
         <Button
             android:id="@+id/editButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/editicon"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/addButton"/>
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/LinearLayout01"
+            android:layout_marginEnd="12dp"
+            android:layout_toStartOf="@+id/addButton"
+            android:background="@drawable/editicon" />
+
         <Button
             android:id="@+id/addButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/addbuttonimage"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"/>
+            android:background="@drawable/addbuttonimage" />
 
 
         <LinearLayout
@@ -29,8 +33,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical" >
-
-
 
         </LinearLayout>
     </RelativeLayout>

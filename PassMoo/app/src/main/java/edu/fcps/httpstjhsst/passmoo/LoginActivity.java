@@ -63,7 +63,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void validate(String userPseudoEmail, String userPassword){ // checks if user can login
-//        //implement firebase authentification
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
@@ -75,14 +74,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
 
                     Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
-//                    Intent addIntent = new Intent(LoginActivity.this, AddActivity.class);
-//                    Intent editIntent = new Intent(LoginActivity.this, EditActivity.class);
-
                     currentUsername = mUsername.getText().toString();
-//                    Toast.makeText(LoginActivity.this, currentUsername, Toast.LENGTH_SHORT).show();
                     homeIntent.putExtra("homeExtra", currentUsername);
-//                    addIntent.putExtra("addExtra", currentUsername);
-//                    editIntent.putExtra("editExtra", currentUsername);
+
                     startActivity(homeIntent);  // switch from login screen to homescreen
                 }
                 else {

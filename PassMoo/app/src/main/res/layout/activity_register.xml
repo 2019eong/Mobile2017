@@ -4,22 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.fcps.httpstjhsst.passmoo.RegisterActivity">
+    android:background="#FFFFFF"
+    tools:context="edu.fcps.httpstjhsst.passmoo.RegisterActivity"
+    >
 
     <TextView
         android:id="@+id/registerTV"
-        android:layout_width="144dp"
-        android:layout_height="15dp"
-        android:text="New User Registration"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="278dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:text="New User Registration"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.11" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112" />
 
     <EditText
         android:id="@+id/registerNameET"
@@ -82,12 +88,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="Have An Account? Login"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerBTN"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintVertical_bias="0.564" />
+        app:layout_constraintVertical_bias="0.461" />
 
     <EditText
         android:id="@+id/registerPasswordET"
@@ -107,17 +114,4 @@
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintVertical_bias="0.042" />
 
-    <TextView
-        android:id="@+id/testingTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TESTING"
-        app:layout_constraintBottom_toTopOf="@+id/registerLoginTV"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerBTN" />
 </android.support.constraint.ConstraintLayout>
