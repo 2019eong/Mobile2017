@@ -1,5 +1,9 @@
 package edu.fcps.httpstjhsst.passmoo;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Sreya on 1/10/18.
  */

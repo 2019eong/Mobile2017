@@ -3,17 +3,27 @@ package edu.fcps.httpstjhsst.passmoo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.lang.reflect.Type;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
 
 
@@ -25,15 +35,9 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference myRef;
 
     private Intent addIntent, editIntent;
+    private Bundle bundle;
 
-    private ArrayList<AccountInfo> mAccountInfoArray;//for testing purposes
-
-    private AccountInfo mAddedAccount;
-    private String accountstuff;
-    private String websiteName;
-    private String userName;
-    private String passwordName;
-
+    private List<AccountInfo> mAccountInfoArray = new ArrayList<AccountInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,59 +45,91 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         /**** INITIALIZE VARIABLES ****/
-        mCurrentUsername = getIntent().getStringExtra("homeExtra");
+        bundle = getIntent().getExtras();
+        String stringlist = bundle.getString("arraystring");
+        mCurrentUsername = bundle.getString("homeExtra");
+        Toast.makeText(HomeActivity.this, bundle.getString("testingextra"), Toast.LENGTH_LONG).show();
+
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
 
         addIntent = new Intent(HomeActivity.this, AddActivity.class);
         editIntent = new Intent(HomeActivity.this, EditActivity.class);
 
-
-        // THIS DOESN'T WORK -- try to retrieve data from database but unsuccessfully
-
-
-        ValueEventListener valueEventListener = myRef.addValueEventListener(new ValueEventListener() {
+        mAddButton = (Button) findViewById(R.id.addButton);
+        mEditButton = (Button)findViewById(R.id.deleteButton);
+        mAddButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot acct : dataSnapshot.getChildren()) {
-
-                   // if (!acct.equals("N/A")) {     // AKA if NOT the placeholder/dummy val
-                        HashMap<String, AccountInfo> tempMap = (HashMap) acct.getValue();
-                        for (String key : tempMap.keySet()) {
-                            accountstuff = "" + tempMap.get(key);
-                            if (!accountstuff.equalsIgnoreCase("N/A")) {
-
-                                mAccountInfoArray = new ArrayList<AccountInfo>();
-                             //   accountstuff = "" + tempMap.get(key);
-
-                                websiteName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
-                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length()-1);
-                                passwordName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
-                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length());
-                                userName = accountstuff.substring(accountstuff.indexOf('=') +1, accountstuff.length());
-
-                                mAddedAccount=new AccountInfo(websiteName,userName,passwordName);
-
-                                mAccountInfoArray.add(mAddedAccount);
-
-
-
-                            }
-
-                        }
-                    //}
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onClick(View view) {
+                addIntent.putExtra("addExtra", mCurrentUsername);
+                startActivity(addIntent);
             }
         });
+        mEditButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                editIntent.putExtra("editExtra", mCurrentUsername);
+                startActivity(editIntent);
+            }
+        });
+        /*********************************/
+        //need to remember to somehow get new stuff from firebase if coming back to homescreen from add/delete
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<AccountInfo>>(){}.getType();
+        mAccountInfoArray = gson.fromJson(stringlist, type);
 
 
 
+//        for (AccountInfo acct : mAccountInfoArray){
+//            Log.i("Acct Data", acct.getWebsite()+"-"+acct.getUsername()+"-"+acct.getPassword());
+//        }
+//        Toast.makeText(HomeActivity.this, ""+mAccountInfoArray.size(), Toast.LENGTH_LONG).show();
 
-            /***TRYING TO DISPLAY*****///
+
+
+        /*** DOESN'T WORK @ THE MOMENT ***/
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                mAccountInfoArray = new ArrayList<AccountInfo>();
+//                for (DataSnapshot acct : dataSnapshot.getChildren()) {
+//                    if(acct.getKey().equals(mCurrentUsername)){     //only get stuff for logged in user
+//                        HashMap<String, AccountInfo> tempMap = (HashMap)acct.getValue();
+//                        for (String key : tempMap.keySet()) {
+//                            String accountstuff = "" + tempMap.get(key);
+//                            if (!accountstuff.equalsIgnoreCase("N/A")) {    // AKA if NOT the placeholder/dummy val
+//
+//                                //mAccountInfoArray = new ArrayList<AccountInfo>();
+////                            accountstuff = "" + tempMap.get(key);
+//
+//                                String websiteName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
+//                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length()-1);
+//                                String passwordName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
+//                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length());
+//                                String userName = accountstuff.substring(accountstuff.indexOf('=') +1, accountstuff.length());
+//
+//                                AccountInfo mAddedAccount = new AccountInfo(websiteName,userName,passwordName);
+//
+//                                mAccountInfoArray.add(mAddedAccount);
+//                            }
+//                        }
+//                    }
+//                }
+//                Gson gson = new Gson();
+//                String jsonAccountInfo = gson.toJson(mAccountInfoArray);
+//                Intent i = new Intent(HomeActivity.this, HomeActivity.class);
+//                i.putExtra("arraystring", jsonAccountInfo);
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+
+
+        /***** TRYING TO DISPLAY *****/
 //        if(mAccountInfoArray!=null) {
 //            LinearLayout myRoot = (LinearLayout) findViewById(R.id.LinearLayout01);
 //            LinearLayout a = new LinearLayout(this);
@@ -107,38 +143,5 @@ public class HomeActivity extends AppCompatActivity {
 //            myRoot.addView(a);
 //            setContentView(a);
 //        }
-
-
-
-
-        mAddButton = (Button) findViewById(R.id.addButton);
-        mEditButton = (Button)findViewById(R.id.deleteButton);
-
-
-
-        mAddButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                addIntent.putExtra("addExtra", mCurrentUsername);
-                startActivity(addIntent);
-            }
-        });
-
-
-
-
-
-        mEditButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                editIntent.putExtra("editExtra", mCurrentUsername);
-                startActivity(editIntent);
-            }
-        });
     }
-
-
-
 }
