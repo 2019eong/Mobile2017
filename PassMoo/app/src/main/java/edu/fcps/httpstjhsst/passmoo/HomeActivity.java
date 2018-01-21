@@ -3,38 +3,30 @@ package edu.fcps.httpstjhsst.passmoo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
 
     private Button mAddButton;
-    private Button mEditButton;
+    private Button mDeleteButton;
 
     private String mCurrentUsername;    // received current user's username from login activity
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    private Intent addIntent, editIntent;
+    private Intent addIntent, deleteIntent;
     private Bundle bundle;
 
     private List<AccountInfo> mAccountInfoArray = new ArrayList<AccountInfo>();
@@ -54,10 +46,10 @@ public class HomeActivity extends AppCompatActivity {
         myRef = database.getReference("Users");
 
         addIntent = new Intent(HomeActivity.this, AddActivity.class);
-        editIntent = new Intent(HomeActivity.this, EditActivity.class);
+        deleteIntent = new Intent(HomeActivity.this, DeleteActivity.class);
 
         mAddButton = (Button) findViewById(R.id.addButton);
-        mEditButton = (Button)findViewById(R.id.deleteButton);
+        mDeleteButton = (Button)findViewById(R.id.deleteButton);
         mAddButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -66,12 +58,12 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(addIntent);
             }
         });
-        mEditButton.setOnClickListener(new View.OnClickListener()
+        mDeleteButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
-                editIntent.putExtra("editExtra", mCurrentUsername);
-                startActivity(editIntent);
+                deleteIntent.putExtra("deleteExtra", mCurrentUsername);
+                startActivity(deleteIntent);
             }
         });
         /*********************************/
