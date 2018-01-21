@@ -35,8 +35,6 @@ public class HomeActivity extends AppCompatActivity {
     private String passwordName;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         // THIS DOESN'T WORK -- try to retrieve data from database but unsuccessfully
-        mAccountInfoArray = new ArrayList<AccountInfo>();
+
 
         ValueEventListener valueEventListener = myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,7 +63,9 @@ public class HomeActivity extends AppCompatActivity {
                             accountstuff = "" + tempMap.get(key);
                             if (!accountstuff.equalsIgnoreCase("N/A")) {
 
+                                mAccountInfoArray = new ArrayList<AccountInfo>();
                              //   accountstuff = "" + tempMap.get(key);
+
                                 websiteName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
                                 accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length()-1);
                                 passwordName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
@@ -75,6 +75,8 @@ public class HomeActivity extends AppCompatActivity {
                                 mAddedAccount=new AccountInfo(websiteName,userName,passwordName);
 
                                 mAccountInfoArray.add(mAddedAccount);
+
+
 
                             }
 
@@ -91,25 +93,26 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        //***** TRYING TO DISPLAY ****///
-//        TextView accountView = new TextView(this);
-//        RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams
-//                ((int) RelativeLayout.LayoutParams.WRAP_CONTENT,(int) RelativeLayout.LayoutParams.WRAP_CONTENT);
-//        params.leftMargin = 50;
-//        params.topMargin  = 50;
-//        accountView.setText(websiteName);
-//        accountView.setTextSize((float) 20);
-//        accountView.setPadding(20, 50, 20, 50);
-//        accountView.setLayoutParams(params);
-//        layout.addView(accountView);
+            /***TRYING TO DISPLAY*****///
+//        if(mAccountInfoArray!=null) {
+//            LinearLayout myRoot = (LinearLayout) findViewById(R.id.LinearLayout01);
+//            LinearLayout a = new LinearLayout(this);
+//            a.setOrientation(LinearLayout.VERTICAL);
+//            for (int x = 0; x < mAccountInfoArray.size(); x++) {
+//                Button btnTag = new Button(this);
+//                btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+//                btnTag.setText(mAccountInfoArray.get(x).getWebsite());
+//                a.addView(btnTag);
+//            }
+//            myRoot.addView(a);
+//            setContentView(a);
+//        }
 
 
-        //  Toast.makeText(HomeActivity.this, ""+mAccountInfoArray.size() , Toast.LENGTH_SHORT).show();
-        /******************************/
 
 
         mAddButton = (Button) findViewById(R.id.addButton);
-        mEditButton = (Button)findViewById(R.id.editButton);
+        mEditButton = (Button)findViewById(R.id.deleteButton);
 
 
 
