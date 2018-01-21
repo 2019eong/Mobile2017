@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,12 +53,10 @@ public class LoginActivity extends AppCompatActivity {
         /**** INITIALIZE VARIABLES ****/
         homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
         bundle = new Bundle();
-//        bundle.putString("EXTRA_USERNAME","my_username");
-//        bundle.putString("EXTRA_PASSWORD","my_password");
-//        intent.putExtras(extras);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
+        myRef.keepSynced(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -99,8 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     mCurrentUsername = mUsername.getText().toString();
                     loadData();
-                    bundle.putString("homeExtra", mCurrentUsername);
-
+                    bundle.putString("currUser", mCurrentUsername);
                     homeIntent.putExtras(bundle);
                     startActivity(homeIntent);  // switch from login screen to homescreen
                 }
@@ -117,8 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     public void loadData(){ // retrieves data from firebase; sends as an intent to homeactivity
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<AccountInfo> acctArray = new ArrayList<AccountInfo>();

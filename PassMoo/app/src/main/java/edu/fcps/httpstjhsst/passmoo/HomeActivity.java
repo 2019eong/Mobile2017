@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Api;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -26,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    private Intent addIntent, deleteIntent;
+    private Intent addIntent, deleteIntent, homeIntent;
     private Bundle bundle;
 
     private List<AccountInfo> mAccountInfoArray = new ArrayList<AccountInfo>();
@@ -37,14 +38,16 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         /**** INITIALIZE VARIABLES ****/
-        bundle = getIntent().getExtras();
-        String stringlist = bundle.getString("arraystring");
-        mCurrentUsername = bundle.getString("homeExtra");
-        Toast.makeText(HomeActivity.this, bundle.getString("testingextra"), Toast.LENGTH_LONG).show();
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
+        myRef.keepSynced(true);
 
+        bundle = getIntent().getExtras();
+        String stringlist = bundle.getString("arraystring");
+        mCurrentUsername = bundle.getString("homeExtra");
+//        Toast.makeText(HomeActivity.this, stringlist, Toast.LENGTH_LONG).show();
+        
         addIntent = new Intent(HomeActivity.this, AddActivity.class);
         deleteIntent = new Intent(HomeActivity.this, DeleteActivity.class);
 
@@ -72,7 +75,6 @@ public class HomeActivity extends AppCompatActivity {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<AccountInfo>>(){}.getType();
         mAccountInfoArray = gson.fromJson(stringlist, type);
-
 
 
 //        for (AccountInfo acct : mAccountInfoArray){
