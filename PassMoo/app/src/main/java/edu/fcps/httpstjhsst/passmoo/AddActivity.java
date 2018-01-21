@@ -8,14 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -72,8 +66,12 @@ public class AddActivity extends AppCompatActivity {
                     String siteName = mSiteName.getText().toString();
                     String siteUsername = mSiteUsername.getText().toString();
                     String sitePassword = mSitePassword.getText().toString();
+
+
                     mAccount = new AccountInfo(siteName,siteUsername,sitePassword);
                     myRef.child(mCurrentUsername).push().setValue(mAccount);    //adds to curr user's children of accountInfos
+                   // Toast.makeText(AddActivity.this, mAccount+"", Toast.LENGTH_SHORT).show();
+                    //myRef.setValue(mAccount);
                     Toast.makeText(AddActivity.this, "Account added successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(AddActivity.this, HomeActivity.class));    //redirect to home activity --> display on homeactivity
                 }
