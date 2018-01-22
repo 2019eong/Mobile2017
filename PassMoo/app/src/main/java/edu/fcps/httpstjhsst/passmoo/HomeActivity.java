@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 newButton.setPadding(20,0,20,0);
                 newButton.setText(mAccountArray.get(x).getWebsite());
-                newButton.setBackgroundColor(Color.parseColor("#FA305E"));
+                newButton.setBackgroundColor(Color.parseColor("#FE3562"));
                 newButton.setTextColor(Color.WHITE);
                 final int finalX = x;
                 newButton.setOnClickListener(new View.OnClickListener() {

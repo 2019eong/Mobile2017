@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6D6D6D"
+    android:background="#FFFFFF"
     tools:context="edu.fcps.httpstjhsst.passmoo.LoginActivity"
     >
 
@@ -18,9 +18,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Username"
+        android:textColorHint="#c1bfbf"
         android:inputType="textPersonName"
 
-        android:textColor="@color/white"
+        android:textColor="#847f7f"
 
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,9 +41,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Password"
+        android:textColorHint="#c1bfbf"
         android:inputType="textPassword"
 
-        android:textColor="@color/white"
+        android:textColor="#847f7f"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -59,7 +61,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:background="#FA305E"
+        android:background="#FE3562"
         android:text="Login"
 
         android:textColor="@color/white"
@@ -79,7 +81,7 @@
         android:layout_marginTop="8dp"
         android:text="Attempts Remaining: "
 
-        android:textColor="@color/white"
+        android:textColor="#847f7f"
 
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -100,7 +102,7 @@
         android:text="Don't Have An Account? Register"
         android:textSize="16sp"
 
-        android:textColor="@color/white"
+        android:textColor="#847f7f"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 public class DeleteActivity extends AppCompatActivity {
     private EditText mWebsite;
     private EditText mUsername;
+    private String webString;
+    private String userString;
 
     private Button mDeleteAccount;
 
@@ -39,20 +42,18 @@ public class DeleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_delete);
         database = FirebaseDatabase.getInstance();
         mCurrentUsername = getIntent().getStringExtra("deleteExtra");  //current user's username
+//        Toast.makeText(DeleteActivity.this, mCurrentUsername, Toast.LENGTH_SHORT).show();
         currUserRef = database.getReference(mCurrentUsername);
         homeIntent = new Intent(DeleteActivity.this, HomeActivity.class);
 
         bundle = new Bundle();
 
-        mWebsite = (EditText) findViewById(R.id.websitename);
-        mUsername = (EditText) findViewById(R.id.username);
-
+        mWebsite = (EditText)findViewById(R.id.websitename);
+        mUsername = (EditText)findViewById(R.id.username);
         mDeleteAccount = (Button) findViewById(R.id.deleteButton);
         mDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(DeleteActivity.this, "yayy", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(DeleteActivity.this, HomeActivity.class));
                 loadDataAndChangeScreen();
             }
         });
@@ -60,26 +61,29 @@ public class DeleteActivity extends AppCompatActivity {
     }
 
     public void loadDataAndChangeScreen() {
+        webString = mWebsite.getText().toString();
+        userString = mUsername.getText().toString();
+
         currUserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (!dataSnapshot.getValue().equals("N/A")) { // if not the default
-                    listAcctString.add(makeAccountInfo(dataSnapshot.getValue() + ""));
+                    AccountInfo tempacct = makeAccountInfo(dataSnapshot.getValue() + "");
+                    if(tempacct.getWebsite().equals(webString) && tempacct.getUsername().equalsIgnoreCase(userString)){
+                        currUserRefdataSnapshot.getKey();
+                    }
+                    listAcctString.add(tempacct);
                 }
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
-
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -87,11 +91,30 @@ public class DeleteActivity extends AppCompatActivity {
         currUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //delete stuff from listAcctString
+                int ct = 0;
+                boolean tempBool = false;
+                for(AccountInfo acct : listAcctString){
+                    String webString = mWebsite.getText().toString();
+                    String userString = mUsername.getText().toString();
+                    if(webString.equalsIgnoreCase(acct.getWebsite()) && userString.equalsIgnoreCase(acct.getUsername())){
+                        tempBool = true;
+                        break;
+                    }
+                    else{
+                        ct++;
+                    }
+                }
+                if(tempBool){
+                    listAcctString.remove(ct);
+                }
+                Toast.makeText(DeleteActivity.this, listAcctString.toString(), Toast.LENGTH_SHORT).show();
                 Gson gson = new Gson();
                 String jsonAcctStrList = gson.toJson(listAcctString);
                 bundle.putString("accountlist", jsonAcctStrList);
                 bundle.putString("homeExtra", mCurrentUsername);
                 homeIntent.putExtras(bundle);
+//                Toast.makeText(DeleteActivity.this, jsonAcctStrList, Toast.LENGTH_SHORT).show();
                 /* startActivity goes WITHIN onDataChange bc you want it to be
                  * called AFTER all data has been retrieved from Firebase */
                 startActivity(homeIntent);
@@ -106,5 +129,4 @@ public class DeleteActivity extends AppCompatActivity {
         String[] info = acctString.split(";");
         return new AccountInfo(info[0], info[1], info[2]);
     }
-
 }

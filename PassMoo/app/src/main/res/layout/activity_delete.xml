@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="#6D6D6D"
+    android:background="#FFFFFF"
     >
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:id="@+id/linearLayout3"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        >
+        android:layout_centerHorizontal="true">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,13 +28,13 @@
                 android:layout_height="wrap_content"
                 android:text="Website Name: "
                 android:textSize="18sp"
-                android:textColor="@color/white"
+                android:textColor="#847f7f"
                 />
             <EditText
                 android:id="@+id/websitename"
                 android:layout_width="295dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#847f7f"
                 />
         </LinearLayout>
 
@@ -46,30 +46,34 @@
             android:id="@+id/linearLayout2"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
+            android:textColor="#847f7f"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username: "
                 android:textSize="18sp"
-                android:textColor="@color/white"
+                android:textColor="#847f7f"
                 />
             <EditText
                 android:id="@+id/username"
                 android:layout_width="295dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#847f7f"
                 />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete Account"
-            android:textColor="@color/white"
-            android:background="#FA305E"/>
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FE3562"
+        android:text="Delete Account"
+        android:textColor="@color/white"
+        android:layout_marginTop="40dp"
+        android:padding="15dp"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

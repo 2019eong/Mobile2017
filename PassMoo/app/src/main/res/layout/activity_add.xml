@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="#6D6D6D"
+    android:background="#FFFFFF"
     >
 
     <LinearLayout
@@ -21,28 +21,28 @@
             android:layout_height="wrap_content"
             android:text="Website Name: "
             android:textSize="18sp"
-            android:textColor="@color/white"/>
+            android:textColor="#847f7f"/>
 
         <EditText
             android:id="@+id/websitename"
             android:layout_width="295dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="#847f7f"
             />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/storepassword"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Store Password!"
-        android:layout_below="@+id/password"
-        android:layout_alignStart="@+id/password"
-        android:layout_marginTop="28dp"
-        android:layout_alignEnd="@+id/password"
+        android:layout_marginTop="36dp"
+        android:padding="15dp"
         android:textColor="@color/white"
-        android:background="#FA305E"/>
+        android:background="#FE3562"
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true"/>
 
     <EditText
         android:id="@+id/password"
@@ -52,7 +52,7 @@
         android:layout_alignTop="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_alignEnd="@+id/username"
-        android:textColor="@color/white"/>
+        android:textColor="#847f7f"/>
 
     <TextView
         android:id="@+id/textView"
@@ -63,7 +63,7 @@
         android:layout_below="@+id/username"
         android:layout_alignStart="@+id/username"
         android:layout_marginTop="19dp"
-        android:textColor="@color/white"/>
+        android:textColor="#847f7f"/>
 
     <EditText
         android:id="@+id/username"
@@ -72,7 +72,7 @@
         android:layout_below="@+id/textView2"
         android:layout_alignStart="@+id/textView2"
         android:layout_alignEnd="@+id/linearLayout"
-        android:textColor="@color/white"/>
+        android:textColor="#847f7f"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -83,7 +83,7 @@
         android:layout_below="@+id/linearLayout"
         android:layout_alignStart="@+id/linearLayout"
         android:layout_marginTop="21dp"
-        android:textColor="@color/white"/>
+        android:textColor="#847f7f"/>
 
 
 </RelativeLayout>
