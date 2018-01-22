@@ -4,9 +4,6 @@ package edu.fcps.httpstjhsst.passmoo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
@@ -97,11 +94,12 @@ public class HomeActivity extends AppCompatActivity {
             for (int x = 0; x < mAccountArray.size(); x++) {
                 Button newButton = new Button(this);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 params.setMargins(0,0,0,20);
                 newButton.setLayoutParams(params);
                 newButton.setId(x);
-               // newButton.setPadding(20,0,20,0);
+
+                newButton.setPadding(20,0,20,0);
                 newButton.setText(mAccountArray.get(x).getWebsite());
                 newButton.setBackgroundColor(Color.parseColor("#FA305E"));
                 newButton.setTextColor(Color.WHITE);
