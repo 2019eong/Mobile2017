@@ -4,7 +4,12 @@ package edu.fcps.httpstjhsst.passmoo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private Button mAddButton;
     private Button mDeleteButton;
+    private Button mLogoutButton;
 
     private String mCurrentUsername;    // received current user's username from login activity
     private String jsonAcctStrList; // json representation of AccountInfos; used for retrieval from firebase
@@ -43,8 +49,15 @@ public class HomeActivity extends AppCompatActivity {
         addIntent = new Intent(HomeActivity.this, AddActivity.class);
         deleteIntent = new Intent(HomeActivity.this, DeleteActivity.class);
 
+        mLogoutButton = (Button)findViewById(R.id.logoutButton);
         mAddButton = (Button) findViewById(R.id.addButton);
         mDeleteButton = (Button)findViewById(R.id.deleteButton);
+        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            }
+        });
         mAddButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -77,46 +90,37 @@ public class HomeActivity extends AppCompatActivity {
         mAccountArray = gson.fromJson(jsonAcctStrList, type);
      // Toast.makeText(HomeActivity.this, mAccountArray.toString(), Toast.LENGTH_LONG).show();
         if(mAccountArray.size()>0) {
-            LinearLayout a = (LinearLayout) findViewById(R.id.ButtonLayout);
+            LinearLayout a = (LinearLayout)findViewById(R.id.ButtonLayout);
 
             a.setOrientation(LinearLayout.VERTICAL);
 
             for (int x = 0; x < mAccountArray.size(); x++) {
-               // Toast.makeText(HomeActivity.this, "yes"+x, Toast.LENGTH_LONG).show();
                 Button newButton = new Button(this);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.setMargins(0,0,0,20);
                 newButton.setLayoutParams(params);
-                //newButton.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 newButton.setId(x);
                // newButton.setPadding(20,0,20,0);
-
                 newButton.setText(mAccountArray.get(x).getWebsite());
                 newButton.setBackgroundColor(Color.parseColor("#FA305E"));
                 newButton.setTextColor(Color.WHITE);
-
                 final int finalX = x;
                 newButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(HomeActivity.this, "Username: "+mAccountArray.get(finalX).getUsername()+" " +"Password: "+ mAccountArray.get(finalX).getPassword(), Toast.LENGTH_LONG).show();
+                        String toastText = "Username: "+mAccountArray.get(finalX).getUsername()+"\n" +"Password: "+ mAccountArray.get(finalX).getPassword();
+                        SpannableStringBuilder biggerText = new SpannableStringBuilder(toastText);
+                        biggerText.setSpan(new RelativeSizeSpan(1.2f), 0, toastText.length(), 0);
+                        Toast.makeText(HomeActivity.this, biggerText, Toast.LENGTH_LONG).show();
                     }
                 });
                 a.addView(newButton);
-
             }
         }
 
         /*********************************/
         //need to remember to somehow get new stuff from firebase if coming back to homescreen from add/delete
-
-        /***** TRYING TO DISPLAY *****/
-        //use some sort of layout inflater (but idk how)
-
-
-
-
 
     }
     public AccountInfo makeAccountInfo(String acctString){
