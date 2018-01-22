@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/LinearLayoutFull"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -17,6 +18,10 @@
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         >
+<<<<<<< HEAD
+
+
+=======
         <Button
             android:id="@+id/logoutButton"
             android:text="Sign Out"
@@ -24,20 +29,23 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             />
+>>>>>>> 6330d63247b0d6eb3bd447d91293a2e2e65df175
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/deleteicon"
+            android:background="@drawable/deletebutton"
             />
 
         <Button
             android:id="@+id/addButton"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:background="@drawable/addbuttonimage"
+            android:background="@drawable/addbutton"
             />
+
+
     </LinearLayout>
 
     <ScrollView
