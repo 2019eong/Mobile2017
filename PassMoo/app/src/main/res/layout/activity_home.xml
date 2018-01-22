@@ -5,17 +5,19 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="15dp"
-    android:background="#FFFFFF"
+    android:background="#6D6D6D"
     android:orientation="vertical"
     >
+
     <LinearLayout
         android:id="@+id/LinearLayoutHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
-        android:gravity="right"
         >
+
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="45dp"
@@ -23,6 +25,7 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/deleteicon"
             />
+
         <Button
             android:id="@+id/addButton"
             android:layout_width="45dp"
@@ -30,9 +33,24 @@
             android:background="@drawable/addbuttonimage"
             />
     </LinearLayout>
+
     <ScrollView
         android:id="@+id/ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbarStyle="insideOverlay">
+
+        <LinearLayout
+
+
+            android:id="@+id/ButtonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+        </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>

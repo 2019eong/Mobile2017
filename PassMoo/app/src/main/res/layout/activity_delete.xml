@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="#FFFFFF"
+    android:background="#6D6D6D"
     >
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,11 +28,13 @@
                 android:layout_height="wrap_content"
                 android:text="Website Name: "
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 />
             <EditText
                 android:id="@+id/websitename"
                 android:layout_width="295dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 />
         </LinearLayout>
 
@@ -44,17 +46,20 @@
             android:id="@+id/linearLayout2"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username: "
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 />
             <EditText
                 android:id="@+id/username"
                 android:layout_width="295dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 />
         </LinearLayout>
 
@@ -62,7 +67,9 @@
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete Account"/>
+            android:text="Delete Account"
+            android:textColor="@color/white"
+            android:background="#FA305E"/>
 
     </LinearLayout>
 </RelativeLayout>

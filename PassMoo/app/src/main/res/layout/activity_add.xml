@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="#FFFFFF"
+    android:background="#6D6D6D"
     >
 
     <LinearLayout
@@ -20,12 +20,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Website Name: "
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/white"/>
 
         <EditText
             android:id="@+id/websitename"
             android:layout_width="295dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>
@@ -38,7 +40,9 @@
         android:layout_below="@+id/password"
         android:layout_alignStart="@+id/password"
         android:layout_marginTop="28dp"
-        android:layout_alignEnd="@+id/password" />
+        android:layout_alignEnd="@+id/password"
+        android:textColor="@color/white"
+        android:background="#FA305E"/>
 
     <EditText
         android:id="@+id/password"
@@ -47,7 +51,8 @@
         android:layout_marginTop="23dp"
         android:layout_alignTop="@+id/textView"
         android:layout_alignStart="@+id/textView"
-        android:layout_alignEnd="@+id/username" />
+        android:layout_alignEnd="@+id/username"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/textView"
@@ -57,7 +62,8 @@
         android:textSize="18sp"
         android:layout_below="@+id/username"
         android:layout_alignStart="@+id/username"
-        android:layout_marginTop="19dp" />
+        android:layout_marginTop="19dp"
+        android:textColor="@color/white"/>
 
     <EditText
         android:id="@+id/username"
@@ -65,7 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_alignStart="@+id/textView2"
-        android:layout_alignEnd="@+id/linearLayout" />
+        android:layout_alignEnd="@+id/linearLayout"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -75,7 +82,8 @@
         android:textSize="18sp"
         android:layout_below="@+id/linearLayout"
         android:layout_alignStart="@+id/linearLayout"
-        android:layout_marginTop="21dp" />
+        android:layout_marginTop="21dp"
+        android:textColor="@color/white"/>
 
 
 </RelativeLayout>
