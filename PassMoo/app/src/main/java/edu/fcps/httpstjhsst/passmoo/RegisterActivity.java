@@ -25,8 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
-    private DatabaseReference myRef;
-//    private Map<String, AccountInfo> mUserMap;
+
     private TextView mTestingTV;
 
     @Override
@@ -37,28 +36,12 @@ public class RegisterActivity extends AppCompatActivity {
         /**** INITIALIZE VARIABLES ****/
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users");
 
         mRegisterName = (EditText)findViewById(R.id.registerNameET);
         mRegisterUsername = (EditText)findViewById(R.id.registerUsernameET);
         mRegisterPassword = (EditText)findViewById(R.id.registerPasswordET);
         mRegister = (Button)findViewById(R.id.registerBTN);
         mRegisterLogin = (TextView)findViewById(R.id.registerLoginTV);
-
-        /*** OLD STUFF WITH HASHMAPS -- don't use as of now ***/
-        /** THIS WORKS :) **/
-//        mUserMap = new HashMap<String, User>();
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){  // if data has already been put in beforehand, retrieve it so it won't override w/ new registry
-//                    mUserMap = (HashMap<String, User>)dataSnapshot.getValue();  // cast value to HashMap
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
 
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +73,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
     private Boolean validate(){     // checks if all three fields filled out
         Boolean result = false;
         String name = mRegisterName.getText().toString();
@@ -103,10 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         return result;
     }
     public void pushToDatabase(String username){
-        myRef.child(username).push().setValue("N/A");   // pushes dummy piece of data to username's children
-        /*** OLD STUFF WITH HASHMAPS -- don't use as of now ***/
-        //mUserMap.put(username, user);
-        //myRef.setValue(mUserMap);
+        database.getReference(username).push().setValue("N/A"); // pushes dummy piece of data to username's children
     }
     public static class EditActivity extends AppCompatActivity {
         @Override

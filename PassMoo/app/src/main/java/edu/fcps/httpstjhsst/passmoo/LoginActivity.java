@@ -40,26 +40,27 @@ public class LoginActivity extends AppCompatActivity {
     private String mCurrentUsername; // data will be sent to other activities (Add, Edit, Home)
 
     private FirebaseDatabase database;
-    private DatabaseReference myRef;
+    private DatabaseReference currUserRef;
 
     private Intent homeIntent;
     private Bundle bundle;
+
+    private ArrayList<AccountInfo> listAcctString = new ArrayList<AccountInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        /**************************** LOGIN ACTIVITY CURRENTLY WORKING ****************************/
+
         /**** INITIALIZE VARIABLES ****/
-        homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
-        bundle = new Bundle();
-
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users");
-        myRef.keepSynced(true);
-
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
+
+        homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+        bundle = new Bundle();
 
         mUsername = (EditText)findViewById(R.id.userUsernameET);
         mPassword = (EditText)findViewById(R.id.userPasswordET);
@@ -85,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
     private void validate(String userPseudoEmail, String userPassword){ // checks if user can login
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
@@ -93,14 +93,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    progressDialog.dismiss();
-//                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-
                     mCurrentUsername = mUsername.getText().toString();
-                    loadData();
-                    bundle.putString("currUser", mCurrentUsername);
-                    homeIntent.putExtras(bundle);
-                    startActivity(homeIntent);  // switch from login screen to homescreen
+                    currUserRef = database.getReference(mCurrentUsername);
+                    currUserRef.keepSynced(true);
+                    loadDataAndChangeScreen();
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
@@ -114,37 +110,83 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public void loadData(){ // retrieves data from firebase; sends as an intent to homeactivity
-        myRef.addValueEventListener(new ValueEventListener() {
+    /* WORKING -- Retrieves data from firebase; sends as an intent to homeactivity */
+    public void loadDataAndChangeScreen(){
+        currUserRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if(!dataSnapshot.getValue().equals("N/A")){ // if not the default
+                    listAcctString.add(makeAccountInfo(dataSnapshot.getValue()+""));
+                }
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        currUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<AccountInfo> acctArray = new ArrayList<AccountInfo>();
-                for (DataSnapshot acct : dataSnapshot.getChildren()) {
-                    if(acct.getKey().equals(mCurrentUsername)){     //only get stuff for logged in user
-                        HashMap<String, AccountInfo> tempMap = (HashMap)acct.getValue();
-                        for (String key : tempMap.keySet()) {
-                            String accountstuff = "" + tempMap.get(key);
-                            if (!accountstuff.equalsIgnoreCase("N/A")) {    // AKA if NOT the placeholder/dummy val
-                                String websiteName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
-                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length()-1);
-                                String passwordName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
-                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length());
-                                String userName = accountstuff.substring(accountstuff.indexOf('=') +1, accountstuff.length());
-
-                                AccountInfo tempAccount = new AccountInfo(websiteName,userName,passwordName);
-                                acctArray.add(tempAccount);
-                            }
-                        }
-                    }
-                }
                 Gson gson = new Gson();
-                String jsonAccountInfo = gson.toJson(acctArray);
-                Toast.makeText(LoginActivity.this, jsonAccountInfo, Toast.LENGTH_LONG).show();
-                bundle.putString("arraystring", jsonAccountInfo);
+                String jsonAcctStrList = gson.toJson(listAcctString);
+                bundle.putString("accountlist", jsonAcctStrList);
+                bundle.putString("homeExtra", mCurrentUsername);
+                homeIntent.putExtras(bundle);
+                progressDialog.dismiss();
+                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                /* startActivity goes WITHIN onDataChange bc you want it to be
+                 * called AFTER all data has been retrieved from Firebase */
+                startActivity(homeIntent);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
+    public AccountInfo makeAccountInfo(String acctString){
+        String[] info = acctString.split(";");
+        return new AccountInfo(info[0], info[1], info[2]);
+    }
 }
+
+
+//        currUserRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                List<AccountInfo> acctArray = new ArrayList<AccountInfo>();
+//                Toast.makeText(LoginActivity.this, dataSnapshot.getKey(), Toast.LENGTH_LONG).show();
+//                for (DataSnapshot acct : dataSnapshot.getChildren()) {
+//                    if(acct.getKey().equals(mCurrentUsername)){     //only get stuff for logged in user
+//                        HashMap<String, AccountInfo> tempMap = (HashMap)acct.getValue();
+//                        for (String key : tempMap.keySet()) {
+//                            String accountstuff = "" + tempMap.get(key);
+//                            if (!accountstuff.equalsIgnoreCase("N/A")) {    // AKA if NOT the placeholder/dummy val
+//                                String websiteName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
+//                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length()-1);
+//                                String passwordName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
+//                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length());
+//                                String userName = accountstuff.substring(accountstuff.indexOf('=') +1, accountstuff.length());
+//
+//                                AccountInfo tempAccount = new AccountInfo(websiteName,userName,passwordName);
+//                                acctArray.add(tempAccount);
+//                            }
+//                        }
+//                    }
+//                }
+//                Gson gson = new Gson();
+//                String jsonAccountInfo = gson.toJson(acctArray);
+//                Toast.makeText(LoginActivity.this, jsonAccountInfo, Toast.LENGTH_LONG).show();
+//                bundle.putString("arraystring", jsonAccountInfo);
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });

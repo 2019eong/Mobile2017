@@ -19,7 +19,6 @@ public class DeleteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete);
 
-
         mWebsite = (EditText) findViewById(R.id.websitename);
         mUsername = (EditText) findViewById(R.id.username);
 
@@ -29,8 +28,6 @@ public class DeleteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(DeleteActivity.this, "yayy", Toast.LENGTH_SHORT).show();
-
-
 
             }
         });

@@ -1,40 +1,38 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView01"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayoutFull"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="10dp"
+    android:padding="15dp"
     android:background="#FFFFFF"
+    android:orientation="vertical"
     >
-    <RelativeLayout
-        android:id="@+id/RelativeLayout01"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-
+    <LinearLayout
+        android:id="@+id/LinearLayoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:gravity="right"
+        >
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_below="@+id/LinearLayout01"
-            android:layout_marginEnd="12dp"
-            android:layout_toStartOf="@+id/addButton"
-            android:background="@drawable/deleteicon" />
-
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/deleteicon"
+            />
         <Button
             android:id="@+id/addButton"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/addbuttonimage" />
-
-
-        <LinearLayout
-            android:id="@+id/LinearLayout01"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-
-        </LinearLayout>
-    </RelativeLayout>
-
-</ScrollView>
+            android:background="@drawable/addbuttonimage"
+            />
+    </LinearLayout>
+    <ScrollView
+        android:id="@+id/ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ScrollView>
+</LinearLayout>

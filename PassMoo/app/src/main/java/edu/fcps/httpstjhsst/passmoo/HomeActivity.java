@@ -1,20 +1,32 @@
 package edu.fcps.httpstjhsst.passmoo;
 
+import android.accounts.Account;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Api;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -24,13 +36,14 @@ public class HomeActivity extends AppCompatActivity {
     private Button mDeleteButton;
 
     private String mCurrentUsername;    // received current user's username from login activity
+    private String jsonAcctStrList; // json representation of AccountInfos; used for retrieval from firebase
     private FirebaseDatabase database;
-    private DatabaseReference myRef;
+    private DatabaseReference currUserRef;  //firebase reference to current user's accoutns
 
-    private Intent addIntent, deleteIntent, homeIntent;
-    private Bundle bundle;
+    private Intent addIntent, deleteIntent;
+    private Bundle bundle;  // contains important info (ex. mCurrentUsername, jsonAcctStrList) from LoginActivity
 
-    private List<AccountInfo> mAccountInfoArray = new ArrayList<AccountInfo>();
+    private List<AccountInfo> mAccountArray = new ArrayList<AccountInfo>(); // holds user's AccountInfos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +51,20 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         /**** INITIALIZE VARIABLES ****/
-
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users");
-        myRef.keepSynced(true);
 
         bundle = getIntent().getExtras();
-        String stringlist = bundle.getString("arraystring");
         mCurrentUsername = bundle.getString("homeExtra");
-//        Toast.makeText(HomeActivity.this, stringlist, Toast.LENGTH_LONG).show();
-        
+        currUserRef = database.getReference(mCurrentUsername);
+        currUserRef.keepSynced(true);
+        /* WORKING -- Takes string representations of each acct, converts each to
+         * AccountInfo object, and adds it to an arraylist of AccountInfo objects. */
+        jsonAcctStrList = bundle.getString("accountlist");
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<AccountInfo>>(){}.getType();
+        mAccountArray = gson.fromJson(jsonAcctStrList, type);
+        Toast.makeText(HomeActivity.this, mAccountArray.toString(), Toast.LENGTH_LONG).show();
+
         addIntent = new Intent(HomeActivity.this, AddActivity.class);
         deleteIntent = new Intent(HomeActivity.this, DeleteActivity.class);
 
@@ -72,58 +89,10 @@ public class HomeActivity extends AppCompatActivity {
         /*********************************/
         //need to remember to somehow get new stuff from firebase if coming back to homescreen from add/delete
 
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<AccountInfo>>(){}.getType();
-        mAccountInfoArray = gson.fromJson(stringlist, type);
-
-
-//        for (AccountInfo acct : mAccountInfoArray){
-//            Log.i("Acct Data", acct.getWebsite()+"-"+acct.getUsername()+"-"+acct.getPassword());
-//        }
-//        Toast.makeText(HomeActivity.this, ""+mAccountInfoArray.size(), Toast.LENGTH_LONG).show();
-
-
-
-        /*** DOESN'T WORK @ THE MOMENT ***/
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                mAccountInfoArray = new ArrayList<AccountInfo>();
-//                for (DataSnapshot acct : dataSnapshot.getChildren()) {
-//                    if(acct.getKey().equals(mCurrentUsername)){     //only get stuff for logged in user
-//                        HashMap<String, AccountInfo> tempMap = (HashMap)acct.getValue();
-//                        for (String key : tempMap.keySet()) {
-//                            String accountstuff = "" + tempMap.get(key);
-//                            if (!accountstuff.equalsIgnoreCase("N/A")) {    // AKA if NOT the placeholder/dummy val
-//
-//                                //mAccountInfoArray = new ArrayList<AccountInfo>();
-////                            accountstuff = "" + tempMap.get(key);
-//
-//                                String websiteName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
-//                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length()-1);
-//                                String passwordName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
-//                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length());
-//                                String userName = accountstuff.substring(accountstuff.indexOf('=') +1, accountstuff.length());
-//
-//                                AccountInfo mAddedAccount = new AccountInfo(websiteName,userName,passwordName);
-//
-//                                mAccountInfoArray.add(mAddedAccount);
-//                            }
-//                        }
-//                    }
-//                }
-//                Gson gson = new Gson();
-//                String jsonAccountInfo = gson.toJson(mAccountInfoArray);
-//                Intent i = new Intent(HomeActivity.this, HomeActivity.class);
-//                i.putExtra("arraystring", jsonAccountInfo);
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-
-
         /***** TRYING TO DISPLAY *****/
+        //use some sort of layout inflater (but idk how)
+
+
 //        if(mAccountInfoArray!=null) {
 //            LinearLayout myRoot = (LinearLayout) findViewById(R.id.LinearLayout01);
 //            LinearLayout a = new LinearLayout(this);
@@ -137,5 +106,9 @@ public class HomeActivity extends AppCompatActivity {
 //            myRoot.addView(a);
 //            setContentView(a);
 //        }
+    }
+    public AccountInfo makeAccountInfo(String acctString){
+        String[] info = acctString.split(";");
+        return new AccountInfo(info[0], info[1], info[2]);
     }
 }
