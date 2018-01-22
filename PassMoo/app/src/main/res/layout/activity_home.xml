@@ -27,6 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:text="Sign Out"
+            android:background="#FA305E"
+            android:textColor="@color/white"
             />
 
         <Button
