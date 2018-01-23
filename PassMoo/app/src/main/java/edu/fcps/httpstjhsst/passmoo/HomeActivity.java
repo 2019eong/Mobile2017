@@ -99,6 +99,7 @@ public class HomeActivity extends AppCompatActivity {
                 newButton.setLayoutParams(params);
                 newButton.setId(x);
 
+
                 newButton.setPadding(20,0,20,0);
                 newButton.setText(mAccountArray.get(x).getWebsite());
                 newButton.setBackgroundColor(Color.parseColor("#FE3562"));

@@ -2,11 +2,26 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/constraintlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     tools:context="edu.fcps.httpstjhsst.passmoo.LoginActivity"
     >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="93dp"
+        android:layout_height="167dp"
+        android:src="@drawable/cowimage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <EditText
         android:id="@+id/userUsernameET"
@@ -28,7 +43,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.287" />
+        app:layout_constraintVertical_bias="0.329"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <EditText
         android:id="@+id/userPasswordET"
@@ -49,7 +66,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userUsernameET"
-        app:layout_constraintVertical_bias="0.077"/>
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <Button
         android:id="@+id/userLoginBTN"
@@ -67,16 +86,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPasswordET"
-        app:layout_constraintVertical_bias="0.181" />
+        app:layout_constraintVertical_bias="0.096"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/userAttemptTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="119dp"
+        android:layout_marginBottom="114dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Attempts Remaining: "
 
         android:textColor="#847f7f"
@@ -86,8 +106,8 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerBTN"
-        app:layout_constraintVertical_bias="0.2"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/userRegisterTV"
@@ -105,5 +125,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userAttemptTV"/>
+        app:layout_constraintTop_toBottomOf="@+id/userAttemptTV"
+        app:layout_constraintVertical_bias="0.343"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 </android.support.constraint.ConstraintLayout>

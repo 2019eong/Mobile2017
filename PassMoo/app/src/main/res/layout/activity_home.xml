@@ -11,32 +11,37 @@
     >
 
 
-
     <LinearLayout
         android:id="@+id/LinearLayoutHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
+        android:layout_height="56dp"
+
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         >
 
         <Button
             android:id="@+id/logoutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="Sign Out"
-            android:background="#FA305E"
-            android:textColor="@color/white"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/logouticon"
+
             />
+        <LinearLayout
+            android:id="@+id/LinearLayoutHeader2"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            >
 
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/deleteicon"
+            android:background="@drawable/deletebutton"
             />
 
         <Button
@@ -46,7 +51,10 @@
             android:background="@drawable/addbutton"
             />
 
+
     </LinearLayout>
+    </LinearLayout>
+
 
     <ScrollView
         android:id="@+id/ScrollView"
@@ -61,7 +69,9 @@
             android:gravity="right"
             android:orientation="horizontal"
             android:paddingBottom="10dp">
+
         </LinearLayout>
+
     </ScrollView>
 
 
