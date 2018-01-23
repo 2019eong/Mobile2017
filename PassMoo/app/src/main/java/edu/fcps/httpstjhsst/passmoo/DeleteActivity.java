@@ -70,9 +70,12 @@ public class DeleteActivity extends AppCompatActivity {
                 if (!dataSnapshot.getValue().equals("N/A")) { // if not the default
                     AccountInfo tempacct = makeAccountInfo(dataSnapshot.getValue() + "");
                     if(tempacct.getWebsite().equals(webString) && tempacct.getUsername().equalsIgnoreCase(userString)){
-                        currUserRefdataSnapshot.getKey();
+                        //if its the thing to delete
+                        currUserRef.child(dataSnapshot.getKey()).removeValue();
                     }
-                    listAcctString.add(tempacct);
+                    else{
+                        listAcctString.add(tempacct);
+                    }
                 }
             }
             @Override
@@ -91,7 +94,6 @@ public class DeleteActivity extends AppCompatActivity {
         currUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //delete stuff from listAcctString
                 int ct = 0;
                 boolean tempBool = false;
                 for(AccountInfo acct : listAcctString){
@@ -108,7 +110,10 @@ public class DeleteActivity extends AppCompatActivity {
                 if(tempBool){
                     listAcctString.remove(ct);
                 }
-                Toast.makeText(DeleteActivity.this, listAcctString.toString(), Toast.LENGTH_SHORT).show();
+                if(listAcctString.size() == 0 && !dataSnapshot.hasChildren()){
+                    currUserRef.push().setValue("N/A");
+                }
+//                Toast.makeText(DeleteActivity.this, listAcctString.toString(), Toast.LENGTH_SHORT).show();
                 Gson gson = new Gson();
                 String jsonAcctStrList = gson.toJson(listAcctString);
                 bundle.putString("accountlist", jsonAcctStrList);

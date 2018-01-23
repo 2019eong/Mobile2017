@@ -20,7 +20,6 @@
         android:hint="Username"
         android:textColorHint="#c1bfbf"
         android:inputType="textPersonName"
-
         android:textColor="#847f7f"
 
 
@@ -43,7 +42,6 @@
         android:hint="Password"
         android:textColorHint="#c1bfbf"
         android:inputType="textPassword"
-
         android:textColor="#847f7f"
 
         app:layout_constraintBottom_toBottomOf="parent"
