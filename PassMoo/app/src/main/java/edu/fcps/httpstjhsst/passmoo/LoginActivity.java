@@ -155,4 +155,8 @@ public class LoginActivity extends AppCompatActivity {
         String[] info = acctString.split(";");
         return new AccountInfo(info[0], info[1], info[2]);
     }
+    @Override
+    public void onBackPressed() {
+        /* prevents user from going back to their account home page after logging out; disables back button */
+    }
 }
