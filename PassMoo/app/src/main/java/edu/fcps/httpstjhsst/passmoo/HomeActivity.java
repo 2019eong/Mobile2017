@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -123,6 +124,19 @@ public class HomeActivity extends AppCompatActivity {
                 });
                 a.addView(newButton);
             }
+        }
+        else{
+            LinearLayout a = (LinearLayout)findViewById(R.id.ButtonLayout);
+            a.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            TextView newTextView = new TextView(this);
+            newTextView.setLayoutParams(params);
+            newTextView.setGravity(Gravity.CENTER);
+            newTextView.setTextColor(Color.parseColor("#c1bfbf"));
+            newTextView.setTextSize(20);
+            newTextView.setText("Press \"+\" to add passwords!");
+            a.addView(newTextView);
         }
     }
     public AccountInfo makeAccountInfo(String acctString){
