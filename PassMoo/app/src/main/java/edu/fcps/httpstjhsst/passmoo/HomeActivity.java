@@ -11,12 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button mAddButton;
     private Button mDeleteButton;
     private Button mLogoutButton;
+    private TextView mUsernameTextView;
 
     private String mCurrentUsername;    // received current user's username from login activity
     private String jsonAcctStrList; // json representation of AccountInfos; used for retrieval from firebase
@@ -48,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
         addIntent = new Intent(HomeActivity.this, AddActivity.class);
         deleteIntent = new Intent(HomeActivity.this, DeleteActivity.class);
 
+        mUsernameTextView = (TextView)findViewById(R.id.usernameTV);
         mLogoutButton = (Button)findViewById(R.id.logoutButton);
         mAddButton = (Button) findViewById(R.id.addButton);
         mDeleteButton = (Button)findViewById(R.id.deleteButton);
@@ -79,6 +84,7 @@ public class HomeActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         mCurrentUsername = bundle.getString("homeExtra");
+        mUsernameTextView.setText("Hello, @" + mCurrentUsername + "!");
         currUserRef = database.getReference(mCurrentUsername);
         currUserRef.keepSynced(true);
         /* WORKING -- Takes string representations of each acct, converts each to

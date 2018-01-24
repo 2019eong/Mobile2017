@@ -15,7 +15,6 @@
         android:id="@+id/LinearLayoutHeader"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         >
@@ -25,7 +24,16 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/logouticon"
-
+            android:layout_marginEnd="10dp"
+            style="?android:attr/borderlessButtonStyle"
+            />
+        <TextView
+            android:id="@+id/usernameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#847f7f"
+            android:textSize="18dp"
+            android:gravity="center"
             />
         <LinearLayout
             android:id="@+id/LinearLayoutHeader2"
@@ -35,26 +43,24 @@
             android:orientation="horizontal"
             android:paddingBottom="10dp"
             >
-
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/deletebutton"
+            style="?android:attr/borderlessButtonStyle"
             />
-
         <Button
             android:id="@+id/addButton"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/addbutton"
+            style="?android:attr/borderlessButtonStyle"
             />
 
-
     </LinearLayout>
     </LinearLayout>
-
 
     <ScrollView
         android:id="@+id/ScrollView"
