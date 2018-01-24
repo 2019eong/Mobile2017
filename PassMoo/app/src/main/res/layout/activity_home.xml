@@ -31,7 +31,8 @@
             android:id="@+id/usernameTV"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="#847f7f"
+            android:textColor="#FE3562"
+            android:textStyle="bold"
             android:textSize="18dp"
             android:gravity="center"
             />

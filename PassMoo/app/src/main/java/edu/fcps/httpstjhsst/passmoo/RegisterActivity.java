@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        mRegisterName = (EditText)findViewById(R.id.registerNameET);
+       // mRegisterName = (EditText)findViewById(R.id.registerNameET);
         mRegisterUsername = (EditText)findViewById(R.id.registerUsernameET);
         mRegisterPassword = (EditText)findViewById(R.id.registerPasswordET);
         mRegister = (Button)findViewById(R.id.registerBTN);
@@ -74,10 +74,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
     private Boolean validate(){     // checks if all three fields filled out
         Boolean result = false;
-        String name = mRegisterName.getText().toString();
+        //String name = mRegisterName.getText().toString();
         String username = mRegisterUsername.getText().toString();
         String password = mRegisterPassword.getText().toString();
-        if(!name.isEmpty() && !username.isEmpty() && !password.isEmpty()){ // if all fields filled out
+        if(!username.isEmpty() && !password.isEmpty()){ // if all fields filled out
             result = true;
             pushToDatabase(username);
         }
