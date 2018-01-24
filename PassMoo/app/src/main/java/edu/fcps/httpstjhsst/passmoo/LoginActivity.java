@@ -156,37 +156,3 @@ public class LoginActivity extends AppCompatActivity {
         return new AccountInfo(info[0], info[1], info[2]);
     }
 }
-
-
-//        currUserRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                List<AccountInfo> acctArray = new ArrayList<AccountInfo>();
-//                Toast.makeText(LoginActivity.this, dataSnapshot.getKey(), Toast.LENGTH_LONG).show();
-//                for (DataSnapshot acct : dataSnapshot.getChildren()) {
-//                    if(acct.getKey().equals(mCurrentUsername)){     //only get stuff for logged in user
-//                        HashMap<String, AccountInfo> tempMap = (HashMap)acct.getValue();
-//                        for (String key : tempMap.keySet()) {
-//                            String accountstuff = "" + tempMap.get(key);
-//                            if (!accountstuff.equalsIgnoreCase("N/A")) {    // AKA if NOT the placeholder/dummy val
-//                                String websiteName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
-//                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length()-1);
-//                                String passwordName = accountstuff.substring(accountstuff.indexOf('=') + 1, accountstuff.indexOf(','));
-//                                accountstuff = accountstuff.substring(accountstuff.indexOf(',')+1, accountstuff.length());
-//                                String userName = accountstuff.substring(accountstuff.indexOf('=') +1, accountstuff.length());
-//
-//                                AccountInfo tempAccount = new AccountInfo(websiteName,userName,passwordName);
-//                                acctArray.add(tempAccount);
-//                            }
-//                        }
-//                    }
-//                }
-//                Gson gson = new Gson();
-//                String jsonAccountInfo = gson.toJson(acctArray);
-//                Toast.makeText(LoginActivity.this, jsonAccountInfo, Toast.LENGTH_LONG).show();
-//                bundle.putString("arraystring", jsonAccountInfo);
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });

@@ -24,7 +24,6 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-
     private Button mAddButton;
     private Button mDeleteButton;
     private Button mLogoutButton;
@@ -38,6 +37,9 @@ public class HomeActivity extends AppCompatActivity {
     private Bundle bundle;  // contains important info (ex. mCurrentUsername, jsonAcctStrList) from LoginActivity
 
     private List<AccountInfo> mAccountArray = new ArrayList<AccountInfo>(); // holds user's AccountInfos
+
+    private String alphaOrig = " !\"#$%&'()*+,-./0123456789:<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    private String  alphaSub = "$wD6[RMU-\\XO0d%psvF#m_f17ng&zo3ZN|*`xkW}K<{JaCe2A+48E5y@TS,(?hG9Hl>j~L^c.V!r':IBP)/=Yt\" Qqubi]";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,6 @@ public class HomeActivity extends AppCompatActivity {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<AccountInfo>>(){}.getType();
         mAccountArray = gson.fromJson(jsonAcctStrList, type);
-     // Toast.makeText(HomeActivity.this, mAccountArray.toString(), Toast.LENGTH_LONG).show();
         if(mAccountArray.size()>0) {
             LinearLayout a = (LinearLayout)findViewById(R.id.ButtonLayout);
 
@@ -98,8 +99,6 @@ public class HomeActivity extends AppCompatActivity {
                 params.setMargins(0,0,0,20);
                 newButton.setLayoutParams(params);
                 newButton.setId(x);
-
-
                 newButton.setPadding(20,0,20,0);
                 newButton.setText(mAccountArray.get(x).getWebsite());
                 newButton.setBackgroundColor(Color.parseColor("#FE3562"));
@@ -108,7 +107,9 @@ public class HomeActivity extends AppCompatActivity {
                 newButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String toastText = "Username: "+mAccountArray.get(finalX).getUsername()+"\n" +"Password: "+ mAccountArray.get(finalX).getPassword();
+                        String tempU = decryptString(mAccountArray.get(finalX).getUsername());
+                        String tempP = decryptString(mAccountArray.get(finalX).getPassword());
+                        String toastText = "Username: "+tempU+"\n" +"Password: "+ tempP;
                         SpannableStringBuilder biggerText = new SpannableStringBuilder(toastText);
                         biggerText.setSpan(new RelativeSizeSpan(1.2f), 0, toastText.length(), 0);
                         Toast.makeText(HomeActivity.this, biggerText, Toast.LENGTH_LONG).show();
@@ -117,13 +118,16 @@ public class HomeActivity extends AppCompatActivity {
                 a.addView(newButton);
             }
         }
-
-        /*********************************/
-        //need to remember to somehow get new stuff from firebase if coming back to homescreen from add/delete
-
     }
     public AccountInfo makeAccountInfo(String acctString){
         String[] info = acctString.split(";");
         return new AccountInfo(info[0], info[1], info[2]);
+    }
+    public String decryptString(String s){
+        String decoded = "";
+        for(int x = 0; x < s.length(); x++){
+            decoded+=alphaOrig.charAt(alphaSub.indexOf(s.charAt(x)));
+        }
+        return decoded;
     }
 }

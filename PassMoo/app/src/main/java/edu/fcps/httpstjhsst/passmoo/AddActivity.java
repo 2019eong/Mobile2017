@@ -35,6 +35,9 @@ public class AddActivity extends AppCompatActivity {
     private Intent homeIntent;
     private ArrayList<AccountInfo> listAcctString = new ArrayList<AccountInfo>();
 
+    private String alphaOrig = " !\"#$%&'()*+,-./0123456789:<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    private String  alphaSub = "$wD6[RMU-\\XO0d%psvF#m_f17ng&zo3ZN|*`xkW}K<{JaCe2A+48E5y@TS,(?hG9Hl>j~L^c.V!r':IBP)/=Yt\" Qqubi]";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class AddActivity extends AppCompatActivity {
                     String siteName = mSiteName.getText().toString();
                     String siteUsername = mSiteUsername.getText().toString();
                     String sitePassword = mSitePassword.getText().toString();
-                    String fullAcct = siteName + ";" + siteUsername + ";" + sitePassword;
+                    String fullAcct = siteName + ";" + encryptString(siteUsername) + ";" + encryptString(sitePassword);
                     currUserRef.push().setValue(fullAcct);
                     /* calling loadDataAndChangeScreen is ESSENTIAL bc it updates firebase AND
                      * the arraylist<accountinfo> that homeactivity will use to display */
@@ -121,5 +124,12 @@ public class AddActivity extends AppCompatActivity {
     public AccountInfo makeAccountInfo(String acctString){
         String[] info = acctString.split(";");
         return new AccountInfo(info[0], info[1], info[2]);
+    }
+    public String encryptString(String s){
+        String encoded = "";
+        for(int x = 0; x < s.length(); x++){
+            encoded+=alphaSub.charAt(alphaOrig.indexOf(s.charAt(x)));
+        }
+        return encoded;
     }
 }

@@ -35,6 +35,8 @@ public class DeleteActivity extends AppCompatActivity {
 
     private String mCurrentUsername;
 
+    private String alphaOrig = " !\"#$%&'()*+,-./0123456789:<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    private String  alphaSub = "$wD6[RMU-\\XO0d%psvF#m_f17ng&zo3ZN|*`xkW}K<{JaCe2A+48E5y@TS,(?hG9Hl>j~L^c.V!r':IBP)/=Yt\" Qqubi]";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class DeleteActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (!dataSnapshot.getValue().equals("N/A")) { // if not the default
                     AccountInfo tempacct = makeAccountInfo(dataSnapshot.getValue() + "");
-                    if(tempacct.getWebsite().equals(webString) && tempacct.getUsername().equalsIgnoreCase(userString)){
+                    if(tempacct.getWebsite().equals(webString) && decryptString(tempacct.getUsername()).equalsIgnoreCase(userString)){
                         //if its the thing to delete
                         currUserRef.child(dataSnapshot.getKey()).removeValue();
                     }
@@ -113,18 +115,15 @@ public class DeleteActivity extends AppCompatActivity {
                 if(listAcctString.size() == 0 && !dataSnapshot.hasChildren()){
                     currUserRef.push().setValue("N/A");
                 }
-//                Toast.makeText(DeleteActivity.this, listAcctString.toString(), Toast.LENGTH_SHORT).show();
                 Gson gson = new Gson();
                 String jsonAcctStrList = gson.toJson(listAcctString);
                 bundle.putString("accountlist", jsonAcctStrList);
                 bundle.putString("homeExtra", mCurrentUsername);
                 homeIntent.putExtras(bundle);
-//                Toast.makeText(DeleteActivity.this, jsonAcctStrList, Toast.LENGTH_SHORT).show();
                 /* startActivity goes WITHIN onDataChange bc you want it to be
                  * called AFTER all data has been retrieved from Firebase */
                 startActivity(homeIntent);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -133,5 +132,12 @@ public class DeleteActivity extends AppCompatActivity {
     public AccountInfo makeAccountInfo(String acctString) {
         String[] info = acctString.split(";");
         return new AccountInfo(info[0], info[1], info[2]);
+    }
+    public String decryptString(String s){
+        String decoded = "";
+        for(int x = 0; x < s.length(); x++){
+            decoded+=alphaOrig.charAt(alphaSub.indexOf(s.charAt(x)));
+        }
+        return decoded;
     }
 }
