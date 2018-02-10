@@ -151,10 +151,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public AccountInfo makeAccountInfo(String acctString){
-        String[] info = acctString.split(";");
-        return new AccountInfo(info[0], info[1], info[2]);
+//    public AccountInfo makeAccountInfo(String acctString){    //from orig
+//        String[] info = acctString.split(";");
+//        return new AccountInfo(info[0], info[1], info[2]);
+//    }
+    public AccountInfo makeAccountInfo(String jsonAcctString) {  // json str of AccountInfo object --> AccountInfo object
+        Gson gson = new Gson();
+        AccountInfo convert = gson.fromJson(jsonAcctString, AccountInfo.class);
+        return convert;
     }
+
     @Override
     public void onBackPressed() {
         /* prevents user from going back to their account home page after logging out; disables back button */

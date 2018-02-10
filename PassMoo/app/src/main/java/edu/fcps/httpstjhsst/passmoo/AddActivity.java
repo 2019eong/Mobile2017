@@ -1,5 +1,6 @@
 package edu.fcps.httpstjhsst.passmoo;
 
+import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity {
@@ -35,8 +38,8 @@ public class AddActivity extends AppCompatActivity {
     private Intent homeIntent;
     private ArrayList<AccountInfo> listAcctString = new ArrayList<AccountInfo>();
 
-    private String alphaOrig = " !\"#$%&'()*+,-./0123456789:<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-    private String  alphaSub = "$wD6[RMU-\\XO0d%psvF#m_f17ng&zo3ZN|*`xkW}K<{JaCe2A+48E5y@TS,(?hG9Hl>j~L^c.V!r':IBP)/=Yt\" Qqubi]";
+    private String alphaOrig = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    private String  alphaSub = "$wD6[RMU-\\XO0d%p;svF#m_f17ng&zo3ZN|*`xkW}K<{JaCe2A+48E5y@TS,(?hG9Hl>j~L^c.V!r':IBP)/=Yt\" Qqubi]";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +67,11 @@ public class AddActivity extends AppCompatActivity {
                     String siteName = mSiteName.getText().toString();
                     String siteUsername = mSiteUsername.getText().toString();
                     String sitePassword = mSitePassword.getText().toString();
-                    String fullAcct = siteName + ";" + encryptString(siteUsername) + ";" + encryptString(sitePassword);
-                    currUserRef.push().setValue(fullAcct);
+//                    String fullAcct = siteName + ";" + encryptString(siteUsername) + ";" + encryptString(sitePassword);   //from orig
+                    AccountInfo fullAcct = new AccountInfo(siteName, encryptString(siteUsername), encryptString(sitePassword));
+                    Gson gson = new Gson();
+                    String jsonFullAcct = gson.toJson(fullAcct);
+                    currUserRef.push().setValue(jsonFullAcct);
                     /* calling loadDataAndChangeScreen is ESSENTIAL bc it updates firebase AND
                      * the arraylist<accountinfo> that homeactivity will use to display */
                     loadDataAndChangeScreen();
@@ -88,7 +94,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if(!dataSnapshot.getValue().equals("N/A")){ // if not the default
-                    listAcctString.add(makeAccountInfo(dataSnapshot.getValue()+""));
+                    listAcctString.add(makeAccountInfo(dataSnapshot.getValue()+""));  //from orig
                 }
             }
             @Override
@@ -121,9 +127,14 @@ public class AddActivity extends AppCompatActivity {
             }
         });
     }
-    public AccountInfo makeAccountInfo(String acctString){
-        String[] info = acctString.split(";");
-        return new AccountInfo(info[0], info[1], info[2]);
+//    public AccountInfo makeAccountInfo(String acctString){    //from orig
+//        String[] info = acctString.split(";");
+//        return new AccountInfo(info[0], info[1], info[2]);
+//    }
+    public AccountInfo makeAccountInfo(String jsonAcctString){  // json str of AccountInfo object --> AccountInfo object
+        Gson gson = new Gson();
+        AccountInfo convert = gson.fromJson(jsonAcctString, AccountInfo.class);
+        return convert;
     }
     public String encryptString(String s){
         String encoded = "";

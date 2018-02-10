@@ -43,8 +43,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private List<AccountInfo> mAccountArray = new ArrayList<AccountInfo>(); // holds user's AccountInfos
 
-    private String alphaOrig = " !\"#$%&'()*+,-./0123456789:<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-    private String  alphaSub = "$wD6[RMU-\\XO0d%psvF#m_f17ng&zo3ZN|*`xkW}K<{JaCe2A+48E5y@TS,(?hG9Hl>j~L^c.V!r':IBP)/=Yt\" Qqubi]";
+    private String alphaOrig = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    private String  alphaSub = "$wD6[RMU-\\XO0d%p;svF#m_f17ng&zo3ZN|*`xkW}K<{JaCe2A+48E5y@TS,(?hG9Hl>j~L^c.V!r':IBP)/=Yt\" Qqubi]";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,10 +138,6 @@ public class HomeActivity extends AppCompatActivity {
             newTextView.setText("Press \"+\" to add passwords!");
             a.addView(newTextView);
         }
-    }
-    public AccountInfo makeAccountInfo(String acctString){
-        String[] info = acctString.split(";");
-        return new AccountInfo(info[0], info[1], info[2]);
     }
     public String decryptString(String s){
         String decoded = "";
